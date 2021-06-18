@@ -1,0 +1,108 @@
+<app-connection-state></app-connection-state>
+<div class="ui-g ui-g-nopad" id="wrapper">
+  <div class="ui-lg-9 ui-md-8 ui-sm-12 ui-g-nopad" id="content">
+    <div class="ui-g ui-g-nopad">
+      <div class="ui-g-12" id="header">
+        <img src="../assets/images/Dandelion-Logo.png">
+      </div>
+
+      <div class="ui-g ui-lg-9 ui-md-8 ui-sm-12" id="footer">
+        <span>Dandelion IOT &copy; 2020</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-lg-3 ui-md-4 ui-sm-12 ui-g-nopad" id="side-bar">
+    <div class="ui-g ui-g-nopad" id="auth-form">
+      <div *ngIf="state == 0">
+        <div class="ui-float-label">
+          <input id="identity-input"
+                 (keyup.enter)="sendIdentity()"
+                 class="form-input"
+                 type="text"
+                 size="18"
+                 [(ngModel)]="phoneNumber"
+                 [disabled]="!isConnectedToServer()"
+                 pInputText
+
+                 required="">
+          <label for="identity-input">Phone Number</label>
+        </div>
+        <button pButton
+                type="button"
+                label="REQUEST KEY"
+                icon="pi pi-key"
+                (click)="sendIdentity()"
+                [disabled]="!isConnectedToServer()"
+                class="ui-button-raised ui-button-info"></button>
+      </div>
+      <div *ngIf="state == 1">
+        <div class="ui-float-label">
+          <input id="key-input"
+                 class="form-input"
+                 type="text"
+                 size="18"
+                 maxlength="6"
+                 [disabled]="!isConnectedToServer() || isMaxLength()"
+                 [(ngModel)]="activationKey"
+                 (input)="sendActivationKey()"
+                 pInputText
+                 required="">
+          <label for="key-input" [ngStyle]="{color: getTrueColor()}">{{activationKeyPlaceHolder}}</label>
+        </div>
+        <a id="wrong-question" [routerLink]="" (click)="setState(0)">Wrong phone number ?</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+<div class="ui-g ui-g-12 wrapper">
+  <div class="ui-g-9 ui-md-9 ui-lg-9 ui-g-nopad left-side">
+    <div class="header ui-g-12">
+&lt;!&ndash;      <img src="../../../assets/images/Dandelion-Logo.png">&ndash;&gt;
+    </div>
+    <div class="footer">
+
+    </div>
+  </div>
+  <div class="ui-g-3 ui-md-3 ui-lg-3 ui-g-nopad right-side">
+    <div class="input-form">
+      <div *ngIf="state == 0">
+        <div class="ui-float-label">
+          <input id="req_code"
+                 type="text"
+                 pInputText
+                 [(ngModel)]="phoneNumber"
+                 (keyup.enter)="sendIdentity()"
+                 [disabled]="!isConnectedToServer()">
+          <label for="req_code">Phone Number</label>
+        </div>
+        <div class="btn-position">
+          <button pButton type="button"
+                  class="ui-button-raised ui-button-secondary"
+                  label="REQUEST CODE"
+                  (click)="sendIdentity()"
+                  [disabled]="!isConnectedToServer()"></button>
+        </div>
+      </div>
+      <div *ngIf="state == 1">
+        <div class="ui-float-label">
+          <input id="check_code" type="text" pInputText
+                 maxlength="6"
+                 [disabled]="!isConnectedToServer() || isMaxLength()"
+                 [(ngModel)]="activationKey"
+                 (input)="sendActivationKey()">
+          <label for="check_code" [ngStyle]="{color: getTrueColor()}">{{activationKeyPlaceHolder}}</label>
+        </div>
+
+        <div class="btn-position">
+          <a [routerLink]="" (click)="setState(0)">Wrong phone number ?</a>
+        </div>
+      </div>
+      <span *ngIf="!isConnectedToServer()" id="conn_state" class="blinking">trying connect to server</span>
+    </div>
+  </div>
+</div>
+-->

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package dandelion;
+
+option java_package = "ir.moke.dandelion.core.protobuf";
+option java_outer_classname = "RequestMessageProtos";
+option java_multiple_files = true;
+
+enum RequestType {
+  PUBLIC_KEY = 0;
+  AUTH = 1;
+  PACKET = 2;
+  RPC = 3;
+}
+
+message Request {
+  RequestType type = 1;
+  PublicKey publicKey = 2;
+  Auth auth = 3;
+  Packet packet = 4;
+}
+
+message Rpc {
+  bytes data = 1;
+  int64 seqNumber = 2;
+  int32 cmd = 3;
+}
+
+message Auth {
+  bytes identity = 1;
+}
+
+message PublicKey {
+  bytes encodedKey = 1;
+}
+
+message Packet {
+  bytes iv = 1;
+  bytes accessKey = 2;
+  bytes message = 3;
+  bytes rpc = 4;
+}
+
+message Message {
+  int64 seq = 1;
+  bytes content = 2;
+  int32 sender = 3;
+  repeated int32 peers = 4 [packed = true];
+  google.protobuf.Timestamp date = 5;
+  int32 sessionId = 6;
+}
